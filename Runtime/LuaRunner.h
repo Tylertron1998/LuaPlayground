@@ -18,12 +18,14 @@ namespace LuaTest::Runtime {
     public:
         const char *fileName;
         void run();
-        void registerMethod();
-        template<typename T>
-        T luaGet(std::string object, std::string identifier);
+
         void displayStack();
+
+        void update();
+
     private:
         lua_State* _state;
+
     };
 }
 

@@ -15,9 +15,7 @@ namespace LuaTest::Runtime {
         _state = luaL_newstate();
         luaL_openlibs(_state);
         printf("Running %s\n", fileName);
-        auto x = luaL_loadfile(_state, fileName);
-
-        lua_call(_state, 0, 0);
+        auto x = luaL_dofile(_state, fileName);
 
         if(x != 0) {
             std::cout << lua_tostring(_state, -1) << std::endl;
@@ -27,25 +25,24 @@ namespace LuaTest::Runtime {
 
     }
 
+    void LuaRunner::update() {
+        auto y = lua_getglobal(_state, "update");
 
-    void LuaRunner::registerMethod() {
-        lua_register(_state, "", nullptr);
-    }
+        if(lua_isfunction(_state, -1)) {
+            auto x = lua_pcall(_state, 0, 0, 0);
 
-    template<>
-    std::string LuaRunner::luaGet(std::string object, std::string identifier) {
-        return "foobar";
-    }
 
-    template<>
-    int LuaRunner::luaGet(std::string object, std::string identifier) {
-        return (int)lua_tonumber(_state, 1);
+            if(x != 0) {
+                std::cout << lua_tostring(_state, -1) << std::endl;
+            }
+        }
+
     }
 
     void LuaRunner::displayStack() {
         auto i = lua_gettop(_state);
-        printf("----------------  Stack Dump ----------------" );
-        while(  i   ) {
+        printf("----------------  Stack Dump[%i] ----------------\n", i);
+        while(i) {
             int t = lua_type(_state, i);
             switch (t) {
                 case LUA_TSTRING:
@@ -61,6 +58,8 @@ namespace LuaTest::Runtime {
             }
             i--;
         }
-        printf(" ----------------  Stack Dump ----------------");
+        printf("\n ----------------  Stack Dump ----------------\n");
     }
+
+
 }

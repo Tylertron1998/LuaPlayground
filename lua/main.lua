@@ -6,8 +6,9 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-print("hello");
-x = 1;
-y = 2;
-z = 3;
-zxy = 4;
+local x = 1;
+
+function update()
+    print("update " .. x);
+    x = x + 1;
+end

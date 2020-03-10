@@ -7,6 +7,7 @@ try {
     auto runner = new Runtime::LuaRunner();
     runner->fileName = "lua/main.lua";
     runner->run();
+    runner->displayStack();
     getchar();
     return 0;
 } catch(std::exception e) {

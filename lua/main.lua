@@ -6,4 +6,8 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-print("hello world");
+print("hello");
+x = 1;
+y = 2;
+z = 3;
+zxy = 4;

@@ -3,7 +3,9 @@ project(LuaTest)
 
 find_path(LUA_INCLUDE_DIRS lua.h)
 include_directories(${LUA_INCLUDE_DIRS})
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lua/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/lua)
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/lua ${CMAKE_CURRENT_BINARY_DIR}/lua)
 
 find_library(LUA_LIBRARY NAMES liblua lua)
 link_libraries(${LUA_LIBRARY})
